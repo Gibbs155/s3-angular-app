@@ -1,0 +1,17 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo "Installing Dependencies..."
+      - npm install
+      - npm install -g @angular/cli@10.0.8
+    build:
+      commands:
+        - echo "Builñding Angular projecty..."
+        - ng build --prod
+    post_build:
+      commands:
+        - echo "Updating files in the bucket s3.."
+        - aws s3 sync dist/s3-angular-app/ s3://source-gibbs --delete
